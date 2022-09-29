@@ -1,6 +1,8 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.9;
 
+import "hardhat/console.sol";
+
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
@@ -58,7 +60,7 @@ contract EnglishAuction is ERC721, IERC721Receiver{
         require(block.timestamp - auctionNft[tokenId].startTime < auctionTime, "No longer in auction");
         require(auctionNft[tokenId].isAuction, "Not in auction");
         require(msg.value > auctionNft[tokenId].currentHighestBid, "Bid is below current Highest");
-        
+
         AuctionNFT storage nft = auctionNft[tokenId];
         if(nft.highestBidder != nft.owner){
             require(address(this).balance >= nft.currentHighestBid);
